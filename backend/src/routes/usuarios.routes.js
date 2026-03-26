@@ -7,4 +7,18 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+
+    const { nombre, correo } = req.body;
+
+    res.json({
+        message: "Usuario recibido correctamente",
+        data: {
+            nombre,
+            correo
+        }
+    });
+
+});
+
 module.exports = router;
