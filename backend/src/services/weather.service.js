@@ -1,11 +1,9 @@
 const axios = require("axios");
 
-
-
 const getWeatherByCoords = async (lat, lon) => {
 
     try {
-        console.log(process.env.WEATHER_API_KEY);
+
         const response = await axios.get(
             "https://api.openweathermap.org/data/2.5/weather",
             {
@@ -19,7 +17,17 @@ const getWeatherByCoords = async (lat, lon) => {
             }
         );
 
-        return response.data;
+        const data = response.data;
+
+        return {
+
+            ciudad: data.name,
+            pais: data.sys.country,
+            temperatura: data.main.temp,
+            humedad: data.main.humidity,
+            descripcion: data.weather[0].description
+
+        };
 
     } catch (error) {
 

@@ -1,14 +1,11 @@
 const axios = require("axios");
-require("dotenv").config();
-
-const API_URL = "https://api.thedogapi.com/v1";
 
 const getDogBreeds = async () => {
 
     try {
 
         const response = await axios.get(
-            `${API_URL}/breeds`,
+            "https://api.thedogapi.com/v1/breeds",
             {
                 headers: {
                     "x-api-key": process.env.DOG_API_KEY
@@ -16,7 +13,14 @@ const getDogBreeds = async () => {
             }
         );
 
-        return response.data;
+        return response.data.map((breed) => ({
+
+            raza: breed.name,
+            pesoPromedio: breed.weight.metric,
+            esperanzaVida: breed.life_span,
+            temperamento: breed.temperament || "No disponible"
+
+        }));
 
     } catch (error) {
 

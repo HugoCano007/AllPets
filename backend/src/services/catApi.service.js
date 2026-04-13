@@ -1,14 +1,11 @@
 const axios = require("axios");
-require("dotenv").config();
-
-const API_URL = "https://api.thecatapi.com/v1";
 
 const getCatBreeds = async () => {
 
     try {
 
         const response = await axios.get(
-            `${API_URL}/breeds`,
+            "https://api.thecatapi.com/v1/breeds",
             {
                 headers: {
                     "x-api-key": process.env.CAT_API_KEY
@@ -16,7 +13,14 @@ const getCatBreeds = async () => {
             }
         );
 
-        return response.data;
+        return response.data.map((breed) => ({
+
+            raza: breed.name,
+            origen: breed.origin,
+            esperanzaVida: breed.life_span,
+            temperamento: breed.temperament
+
+        }));
 
     } catch (error) {
 
